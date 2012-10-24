@@ -1,0 +1,414 @@
+#container {
+margin:0 auto;
+min-width:76.25em;
+}
+
+#content {
+
+}
+
+#content article {
+box-shadow:0 2px 6px #666;
+display:inline-block;
+margin:1.2em;
+position:relative;
+}
+
+.likes a {
+background-color: #FAE9DA;
+color: #db6060;
+font-size: 0.8em;
+font-family: Arial;
+font-weight: bold;
+padding: 0.5em;
+position: absolute;
+top: 1em;
+right: 1em;
+display: none;
+border-radius: 0.5em
+}
+
+article:hover .likes a {
+display: block;
+}
+
+.description {
+background-color:#fff;
+border:1px dashed #eee;
+bottom:0;
+color:#aaa;
+display:none;
+font-size:.8em;
+left:-1px;
+line-height:1.5em;
+max-height:100%;
+overflow:hidden;
+position:absolute;
+width:100%;
+}
+
+article .description > p {
+padding:0 1em;
+text-align: right;
+}
+
+article img {
+vertical-align:top;
+width: 16em;
+}
+
+article:hover .description {
+display:block;
+}
+
+.flash {
+  background: #fff;
+  border: 1px solid #777;
+  max-width: 40em;
+  text-align: center;
+  border-radius: 4px;
+  color: #666;
+  padding: 0.5em;
+  margin: 1em auto;
+}
+
+#prevPage, #nextPage {
+  background: url('../images/icon_sprite_light.png') no-repeat -4px -200px;
+  position: fixed;
+  top: 50%;
+  width: 60px;
+  height: 60px;
+  text-indent: -1000em;
+  outline: none;
+}
+
+#prevPage {
+  left: 30px; 
+}
+#prevPage:hover {
+  background-position: -4px -260px;
+}
+#nextPage {
+  background-position: -64px  -200px; 
+  right: 30px;
+}
+#nextPage:hover {
+  background-position: -64px  -260px;
+}
+
+#gallery {
+  margin:0 auto;
+}
+#login-profile {
+  margin-right: 0.8em;
+}
+#login-options {
+	margin:0;
+	padding:0;
+}
+
+#id-icon {
+	width: 1.5em;
+	height: 1.5em;
+	vertical-align:middle;
+}
+
+.dropdown {
+	position:relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  display:none;
+  top: 100%;
+  right: 0;
+  z-index: 1000;
+  display: block;
+  float: left;
+  min-width: 12em;
+  padding: 0.5em 0;
+  margin: 1px 0 0;
+  list-style: none;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display:none;
+}
+
+.dropdown-menu hr {
+  display:block;
+  height: 1px;
+  overflow: hidden;
+  background-color: #ddd;
+  border-width: 0 0 1px 0;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 0.2em 1em;
+  clear: both;
+  color: #333;
+  white-space: nowrap;
+}
+
+.dropdown-menu li > a:hover {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #333;
+}
+
+.open > .dropdown-menu {
+  display: block;
+}
+
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: top;
+  border-top: 4px solid #000000;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  content: "";
+  opacity: 0.5;
+}
+
+.login-button .caret{
+	margin-top: 1em;
+}
+
+#login-options > li {
+display: inline-block;
+line-height:2.5em;
+padding:0.5em 0 ;
+}
+
+#login-options > .login-button > a {
+	border: 1px solid #999;
+	background: #fff;
+	padding:0.6em;
+}
+
+#login-options > .login-button:first-child > a
+{
+	border-radius: 3px 0 0 3px;
+}
+
+#login-options > .login-button:last-child > a
+{
+	margin-left: -1px;
+	border-radius: 0 3px 3px 0;
+}
+
+input[type="text"] {
+border:1px solid #ddd;
+box-shadow:1px 1px 4px #f4f4f4;
+color:#444;
+display:inline-block;
+outline:none;
+padding:.2em;
+}
+
+#title {
+background-color:#eee;
+padding:1em;
+}
+
+#title h1 {
+font-size:2em;
+line-height:1.25em;
+margin:0;
+padding:0.25em;
+float:left;
+display: inline-block;
+font-family: "Droid Serif", Serif;
+}
+
+#login-profile {
+float:right;
+}
+
+#title nav {
+	float:left;
+}
+
+#title nav input[type="text"] {
+	width:20em;
+	border: 1px solid #aaa;
+	border-radius: 3px 0 0 3px;
+	padding: 0.6em;
+}
+
+#search-button {
+background-color: #fff;
+color:#666;
+border: 1px solid #aaa;
+padding: 0.6em;
+margin-left:-1px;
+border-radius: 0 3px 3px 0;
+}
+
+#title nav ol {
+margin:0;
+padding:0;
+}
+
+#title nav ol li {
+display:inline-block;
+padding: 0.5em;
+}
+
+#title nav ol li a {
+color:#666;
+display:block;
+line-height:2.5em;
+text-align:center;
+}
+
+#title nav ol li a:hover {
+color:#333;
+}
+
+.clearfix:after {
+clear:both;
+content:".";
+display:block;
+height:0;
+visibility:hidden;
+}
+
+a {
+color:#666;
+text-decoration:none;
+}
+
+a:hover {
+color:#333;
+}
+
+body {
+color:#666;
+font: 12px/16px "Droid Serif", sans-serif;
+font-family:"Segoe UI", "Segoe UI Web Regular", "Segoe UI Symbol", "Helvetica Neue", "BBAlpha Sans",  "S60 Sans", Arial, "sans-serif";
+background-color:#FFF;
+height:100%;
+}
+
+html {
+height:100%;
+}
+
+fieldset {
+  border: 0;
+}
+
+.form-horizontal {
+  width: 28em;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid #333;
+  border-radius: 3px;
+  padding: 2em;
+}
+
+.form-horizontal input,
+.form-horizontal textarea,
+.form-horizontal select,
+.form-horizontal .help-inline,
+.form-horizontal .uneditable-input,
+.form-horizontal .input-prepend,
+.form-horizontal .input-append {
+  display: inline-block;
+  *display: inline;
+  margin-bottom: 0;
+  *zoom: 1;
+}
+
+.control-group {
+  margin-bottom: 9px;
+}
+
+legend + .control-group {
+  margin-top: 18px;
+  -webkit-margin-top-collapse: separate;
+}
+
+.form-horizontal .control-group {
+  margin-bottom: 18px;
+  *zoom: 1;
+}
+
+.form-horizontal .control-group:before,
+.form-horizontal .control-group:after {
+  display: table;
+  content: "";
+}
+
+.form-horizontal .control-group:after {
+  clear: both;
+}
+
+.form-horizontal .control-label {
+  float: left;
+  width: 140px;
+  padding-top: 5px;
+  text-align: right;
+}
+
+.form-horizontal .controls {
+  *display: inline-block;
+  *padding-left: 20px;
+  margin-left: 160px;
+  *margin-left: 0;
+}
+
+.form-horizontal .controls:first-child {
+  *padding-left: 160px;
+}
+
+.form-horizontal .help-block {
+  margin-top: 9px;
+  margin-bottom: 0;
+}
+
+.form-horizontal .form-actions {
+  padding-left: 160px;
+}
+
+.submit-button {
+background-color: #fff;
+color:#666;
+border: 1px solid #aaa;
+padding: 0.6em;
+border-radius: 3px;
+}
+
+#sidebar {
+  padding: 1em 0;
+  float:left;
+  background-color: #F3F3F3;
+}
+
+.sidebar-menu {
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-item {
+  display:block;
+  line-height: 2em;
+  list-style: none;
+  background-color: #F3F3F3;
+  width:9em;
+  padding: 1em;
+  text-align: center;
+}
+
+.sidebar-item:hover {
+  background: #CCC;
+}
+
+.side-content {
+  margin-left: 12em;
+  padding: 1em;
+}
