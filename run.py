@@ -18,8 +18,9 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     xml = db.Column(db.String(2000))
 
-    def __init__(self, xml):
-        self.xml = xml
+    def __init__(self, xml=None):
+        if xml is not None:
+            self.xml = xml
 
     def __repr__(self):
         return '<Question %s>' % self.id
