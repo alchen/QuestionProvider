@@ -11,7 +11,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'somesecretekey')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://localhost/questionprovider')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///test.db')
 db = SQLAlchemy(app)
 Bootstrap(app)
 
@@ -32,6 +32,7 @@ class Question(db.Model):
         return json.dumps({'id': self.id, 'xml': ET.tostring(ET.fromstring(self.xml, parser=parser))})
 
 db.create_all()
+
 
 class QuestionForm(Form):
     xml = TextAreaField('XML code')
