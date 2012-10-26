@@ -1,11 +1,3 @@
 {% extends "layout.html" %}
-{% block body_content  %}
-<nav style="margin:2em">
-  <h3>You can:</h3>
-  <ul>
-    <li>Login</li>
-    <li><a href="{{ url_for('newQuestion') }}">Create a new question</a></li>
-    <li><a href="{{ url_for('listQuestions') }}">View created questions</a></li>
-  </ul>
-</nav>
+{% block content %}
 {% endblock %}

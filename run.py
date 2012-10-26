@@ -1,6 +1,6 @@
 import os
 import simplejson
-from flask import Flask, render_template, flash, redirect, url_for
+from flask import Flask, render_template, flash, redirect, url_for, request
 from flask.ext.wtf import Form, TextField, Required, TextAreaField
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -23,6 +23,9 @@ class Question(db.Model):
     def __repr__(self):
         return '<Question %s>' % self.id
 
+    def json(self):
+        return simplejson.dumps({'id': self.id, 'xml': self.xml})
+
 db.create_all()
 
 class QuestionForm(Form):
@@ -34,17 +37,34 @@ def hello():
 
 @app.route("/questions")
 def listQuestions():
-    questions = Question.query.all()
+    questions = Question.query.order_by('id').all()
     return render_template('listQuestions.html', questions=questions)
+
+@app.route("/question/<int:id>")
+def viewQuestion(id):
+    question = Question.query.get(id)
+    return render_template('viewQuestion.html', question=question, json=question.json())
+
+@app.route("/question/edit/<int:id>", methods=['GET', 'POST'])
+def editQuestion(id):
+    question = Question.query.get(id)
+    form = QuestionForm(obj=question)
+    if form.validate_on_submit():
+        form.populate_obj(question)
+        db.session.commit()
+        return redirect(url_for('listQuestions'))
+    else:
+        return render_template('editQuestion.html', form=form)
 
 @app.route("/question/new", methods=['GET', 'POST'])
 def newQuestion():
     form = QuestionForm()
     if form.validate_on_submit():
-        newQuestion = Question(form.xml.data)
+        newQuestion = Question()
+        form.populate_obj(newQuestion)
         db.session.add(newQuestion)
         db.session.commit()
-        return redirect(url_for('newQuestion'))
+        return redirect(url_for('listQuestions'))
     else:
         return render_template('newQuestion.html', form=form)
 
