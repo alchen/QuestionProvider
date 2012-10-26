@@ -1,9 +1,7 @@
 {% extends "layout.html" %}
 {% block body_content  %}
-{% for message in get_flashed_messages() %}
-  <div class="flash">{{ message }}</div>
-{% endfor %}
 <section id="new-question" style="margin:2em">
+	<h3>Submit new question:</h3>
 	<form class="form form-horizontal" method="post">
 		{{ form.hidden_tag() }}
 		{{ wtf.form_errors(form, False) }}

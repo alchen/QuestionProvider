@@ -8,19 +8,22 @@ from flask.ext.sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'somesecretekey')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://localhost/QuestionProvider')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://localhost/questionprovider')
 db = SQLAlchemy(app)
 Bootstrap(app)
 
+
 class Question(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	xml = db.Column(db.String(2000))
+    id = db.Column(db.Integer, primary_key=True)
+    xml = db.Column(db.String(2000))
 
-	def __init__(self, xml):
-		self.xml = xml
+    def __init__(self, xml):
+        self.xml = xml
 
-	def __repr__(self):
-		return '<Question %s>' % self.id
+    def __repr__(self):
+        return '<Question %s>' % self.id
+
+db.create_all()
 
 class QuestionForm(Form):
     xml = TextAreaField('XML code')
@@ -31,13 +34,16 @@ def hello():
 
 @app.route("/questions")
 def listQuestions():
-    return render_template('listQuestions.html')
+    questions = Question.query.all()
+    return render_template('listQuestions.html', questions=questions)
 
 @app.route("/question/new", methods=['GET', 'POST'])
 def newQuestion():
     form = QuestionForm()
     if form.validate_on_submit():
-        flash("submitted!")
+        newQuestion = Question(form.xml.data)
+        db.session.add(newQuestion)
+        db.session.commit()
         return redirect(url_for('newQuestion'))
     else:
         return render_template('newQuestion.html', form=form)
