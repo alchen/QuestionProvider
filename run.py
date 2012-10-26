@@ -1,5 +1,8 @@
 import os
-import simplejson
+try:
+    import simplejson as json
+except ImportError:
+    import json
 from lxml import etree as ET
 from flask import Flask, render_template, flash, redirect, url_for, request
 from flask.ext.wtf import Form, TextField, Required, TextAreaField
@@ -26,7 +29,7 @@ class Question(db.Model):
 
     def json(self):
         parser = ET.XMLParser(remove_blank_text=True)
-        return simplejson.dumps({'id': self.id, 'xml': ET.tostring(ET.fromstring(self.xml, parser=parser))})
+        return json.dumps({'id': self.id, 'xml': ET.tostring(ET.fromstring(self.xml, parser=parser))})
 
 db.create_all()
 
