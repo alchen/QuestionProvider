@@ -57,6 +57,7 @@ def editQuestion(id):
     if form.validate_on_submit():
         form.populate_obj(question)
         db.session.commit()
+        flash('Question Edited!')
         return redirect(url_for('listQuestions'))
     else:
         return render_template('editQuestion.html', questions = questions, id=id, form=form)
@@ -69,6 +70,7 @@ def newQuestion():
         form.populate_obj(newQuestion)
         db.session.add(newQuestion)
         db.session.commit()
+        flash('Question Submitted!')
         return redirect(url_for('listQuestions'))
     else:
         return render_template('newQuestion.html', form=form)

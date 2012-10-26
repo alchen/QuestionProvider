@@ -2,12 +2,15 @@
 {% import "bootstrap_wtf.html" as wtf %}
 {% block body_content  %}
 <div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %}
 	<div class="row">
         <div class="span12">
 			<nav>
 			  <h3>You can:</h3>
 			  <ul>
-			    <li>Login</li>
+			    <li>Authenticate with QuestionBank</li>
 			    <li><a href="{{ url_for('newQuestion') }}">Create a new question</a></li>
 			    <li><a href="{{ url_for('listQuestions') }}">View created questions</a></li>
 			  </ul>

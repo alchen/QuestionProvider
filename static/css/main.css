@@ -2,3 +2,13 @@ textarea {
 	height: 40em;
 	width: 50em;
 }
+
+.flash {
+  background: #fff;
+  border: 1px solid #777;
+  text-align: center;
+  border-radius: 4px;
+  color: #666;
+  padding: 0.5em;
+  margin: 1em auto;
+}
