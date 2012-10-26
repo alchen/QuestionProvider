@@ -1,5 +1,6 @@
 import os
 import simplejson
+from lxml import etree as ET
 from flask import Flask, render_template, flash, redirect, url_for, request
 from flask.ext.wtf import Form, TextField, Required, TextAreaField
 from flask.ext.bootstrap import Bootstrap
@@ -24,7 +25,8 @@ class Question(db.Model):
         return '<Question %s>' % self.id
 
     def json(self):
-        return simplejson.dumps({'id': self.id, 'xml': self.xml})
+        parser = ET.XMLParser(remove_blank_text=True)
+        return simplejson.dumps({'id': self.id, 'xml': ET.tostring(ET.fromstring(self.xml, parser=parser))})
 
 db.create_all()
 
@@ -42,11 +44,14 @@ def listQuestions():
 
 @app.route("/question/<int:id>")
 def viewQuestion(id):
+    questions = Question.query.order_by('id').all()
     question = Question.query.get(id)
-    return render_template('viewQuestion.html', question=question, json=question.json())
+    tree = ET.fromstring(question.xml)
+    return render_template('viewQuestion.html', questions = questions, id=id, xml=ET.tostring(tree), json=question.json())
 
 @app.route("/question/edit/<int:id>", methods=['GET', 'POST'])
 def editQuestion(id):
+    questions = Question.query.order_by('id').all()
     question = Question.query.get(id)
     form = QuestionForm(obj=question)
     if form.validate_on_submit():
@@ -54,7 +59,7 @@ def editQuestion(id):
         db.session.commit()
         return redirect(url_for('listQuestions'))
     else:
-        return render_template('editQuestion.html', form=form)
+        return render_template('editQuestion.html', questions = questions, id=id, form=form)
 
 @app.route("/question/new", methods=['GET', 'POST'])
 def newQuestion():

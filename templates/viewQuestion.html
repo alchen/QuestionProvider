@@ -1,8 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
-<section id="view-question" style="margin:2em">
-	<h3>Question XML:</h3>
-	{{ question.xml }}
-	{{ json }}
+<section id="new-question">
+	<h3>List of questions:</h3>
+	<ul>
+		{% for question in questions %}
+		<li>Question {{ question.id }}: <a href="{{ url_for('viewQuestion', id=question.id) }}">view</a>, <a href="{{ url_for('editQuestion', id=question.id) }}">edit</a></li>
+		{% else %}
+		<li><em>Unbelievable.  No entries here so far</em></li>
+		{% endfor %}
+	</ul>
+</section>
+<section id="view-question">
+	<h3>Question {{ id }}:</h3>
+	<section id="question-xml">
+		<h4>XML</h4>
+		<pre>{{ xml }}</pre>
+	</section>
+	<section id="question-json">
+		<h4>JSON</h4>
+		<pre>{{ json }}</pre>
+	</section>
 </section>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content  %}
-<section id="new-question" style="margin:2em">
-	<h3>All Questions:</h3>
+<section id="new-question">
+	<h3>List of questions:</h3>
 	<ul>
 		{% for question in questions %}
 		<li>Question {{ question.id }}: <a href="{{ url_for('viewQuestion', id=question.id) }}">view</a>, <a href="{{ url_for('editQuestion', id=question.id) }}">edit</a></li>

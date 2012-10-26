@@ -1,7 +1,17 @@
 {% extends "layout.html" %}
 {% block content %}
-<section id="new-question" style="margin:2em">
-	<h3>Edit question:</h3>
+<section id="new-question">
+	<h3>List of questions:</h3>
+	<ul>
+		{% for question in questions %}
+		<li>Question {{ question.id }}: <a href="{{ url_for('viewQuestion', id=question.id) }}">view</a>, <a href="{{ url_for('editQuestion', id=question.id) }}">edit</a></li>
+		{% else %}
+		<li><em>Unbelievable.  No entries here so far</em></li>
+		{% endfor %}
+	</ul>
+</section>
+<section id="new-question">
+	<h3>Edit question {{ id }}:</h3>
 	<form class="form form-horizontal" method="post">
 		{{ form.hidden_tag() }}
 		{{ wtf.form_errors(form, False) }}
