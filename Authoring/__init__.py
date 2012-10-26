@@ -1,10 +1,12 @@
 from flask import Flask, render_template, flash, redirect, url_for
+from flask_heroku import Heroku
 from flask.ext.wtf import Form, TextField, Required, TextAreaField
 from flask.ext.bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'somesecretkey'
+Heroku(app)
 Bootstrap(app)
 
 class QuestionForm(Form):
