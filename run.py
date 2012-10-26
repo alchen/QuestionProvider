@@ -43,7 +43,7 @@ class PostForm(Form):
     username = TextField('Username')
     password = TextField('Password')
     method = SelectField('Method', choices=[('GET', 'GET'),('POST', 'POST'), ('PUT', 'PUT'), ('DELETE', 'DELETE')])
-    url = TextField('URL', [validators.required()])
+    url = TextField('URL')
     payload = TextAreaField('Payload')
 
 @app.route("/")
@@ -62,13 +62,25 @@ def viewQuestion(id):
     tree = ET.fromstring(question.xml)
     return render_template('viewQuestion.html', questions = questions, id=id, xml=ET.tostring(tree), json=question.json())
 
-@app.route("/question/post/<int:id>")
+@app.route("/question/post/<int:id>", methods=['GET', 'POST'])
 def postQuestion(id):
     questions = Question.query.order_by('id').all()
     question = Question.query.get(id)
     tree = ET.fromstring(question.xml)
-    form = PostForm(payload=question.json())
-    return render_template('postQuestion.html', questions = questions, id=id, form=form)
+    form = PostForm(url="http://127.0.0.1:4000/", payload=question.json())
+    if form.validate_on_submit():
+        if form.method.data == 'PUT':
+            makeRequest = requests.put
+        elif form.method.data == 'POST':
+            makeRequest = requests.post
+        elif form.method.data == 'DELETE':
+            makeRequest = requests.delete
+        else:
+            makeRequest = requests.get
+        response = requests.post(form.url.data, data=form.payload.data)
+        return render_template('postQuestion.html', questions = questions, id=id, form=form, response=response)
+    else:
+        return render_template('postQuestion.html', questions = questions, id=id, form=form)
 
 @app.route("/question/edit/<int:id>", methods=['GET', 'POST'])
 def editQuestion(id):
@@ -95,10 +107,6 @@ def newQuestion():
         return redirect(url_for('listQuestions'))
     else:
         return render_template('newQuestion.html', form=form)
-
-@app.route("/echo", methods=['GET', 'POST', 'DELETE', 'PUT'])
-def echo():
-    return request.data
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))

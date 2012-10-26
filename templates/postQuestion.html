@@ -2,10 +2,18 @@
 {% block content %}
 {% include "_questionsHelper.html" %}
 <section id="post-question">
+	{% if response %}
+	<h3>Response Headers:</h3>
+	<pre>{{ response.headers }}</pre>
+	<h3>Response Content:</h3>
+	<pre>{{ response.text }}</pre>
+	{% endif %}
 	<h3>Posting question {{ id }}:</h3>
 	<form class="form form-horizontal" method="post">
 		{{ form.hidden_tag() }}
 		{{ wtf.form_errors(form, False) }}
+<!-- 		{{ wtf.horizontal_field(form.username) }}
+		{{ wtf.horizontal_field(form.password) }} -->
 		{{ wtf.horizontal_field(form.url) }}
 		{{ wtf.horizontal_field(form.method) }}
 		{{ wtf.horizontal_field(form.payload) }}

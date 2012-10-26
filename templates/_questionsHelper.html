@@ -1,5 +1,5 @@
 <section id="new-question">
-  <h3>List of qnuestions:</h3>
+  <h3>List of questions:</h3>
   <ul>
     {% for question in questions %}
     <li>Question {{ question.id }}: <a href="{{ url_for('viewQuestion', id=question.id) }}">view</a>, <a href="{{ url_for('editQuestion', id=question.id) }}">edit</a>, render, <a href="{{ url_for('postQuestion', id=question.id) }}">post</a></li>
