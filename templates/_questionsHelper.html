@@ -2,7 +2,7 @@
   <h3>List of qnuestions:</h3>
   <ul>
     {% for question in questions %}
-    <li>Question {{ question.id }}: <a href="{{ url_for('viewQuestion', id=question.id) }}">view</a>, <a href="{{ url_for('editQuestion', id=question.id) }}">edit</a>, render, post</li>
+    <li>Question {{ question.id }}: <a href="{{ url_for('viewQuestion', id=question.id) }}">view</a>, <a href="{{ url_for('editQuestion', id=question.id) }}">edit</a>, render, <a href="{{ url_for('postQuestion', id=question.id) }}">post</a></li>
     {% else %}
     <li><em>Unbelievable.  No entries here so far</em></li>
     {% endfor %}

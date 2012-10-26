@@ -3,9 +3,10 @@ try:
     import simplejson as json
 except ImportError:
     import json
+import requests
 from lxml import etree as ET
 from flask import Flask, render_template, flash, redirect, url_for, request
-from flask.ext.wtf import Form, TextField, Required, TextAreaField
+from flask.ext.wtf import Form, TextField, Required, TextAreaField, SelectField, validators
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.sqlalchemy import SQLAlchemy
 
@@ -37,6 +38,14 @@ db.create_all()
 class QuestionForm(Form):
     xml = TextAreaField('XML code')
 
+
+class PostForm(Form):
+    username = TextField('Username')
+    password = TextField('Password')
+    method = SelectField('Method', choices=[('GET', 'GET'),('POST', 'POST'), ('PUT', 'PUT'), ('DELETE', 'DELETE')])
+    url = TextField('URL', [validators.required()])
+    payload = TextAreaField('Payload')
+
 @app.route("/")
 def hello():
     return render_template('hello.html')
@@ -52,6 +61,14 @@ def viewQuestion(id):
     question = Question.query.get(id)
     tree = ET.fromstring(question.xml)
     return render_template('viewQuestion.html', questions = questions, id=id, xml=ET.tostring(tree), json=question.json())
+
+@app.route("/question/post/<int:id>")
+def postQuestion(id):
+    questions = Question.query.order_by('id').all()
+    question = Question.query.get(id)
+    tree = ET.fromstring(question.xml)
+    form = PostForm(payload=question.json())
+    return render_template('postQuestion.html', questions = questions, id=id, form=form)
 
 @app.route("/question/edit/<int:id>", methods=['GET', 'POST'])
 def editQuestion(id):
@@ -78,6 +95,10 @@ def newQuestion():
         return redirect(url_for('listQuestions'))
     else:
         return render_template('newQuestion.html', form=form)
+
+@app.route("/echo", methods=['GET', 'POST', 'DELETE', 'PUT'])
+def echo():
+    return request.data
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
