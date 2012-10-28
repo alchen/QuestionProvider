@@ -42,25 +42,29 @@ class QuestionForm(Form):
 class PostForm(Form):
     username = TextField('Username')
     password = TextField('Password')
-    method = SelectField('Method', choices=[('GET', 'GET'),('POST', 'POST'), ('PUT', 'PUT'), ('DELETE', 'DELETE')])
+    method = SelectField('Method', choices=[('GET', 'GET'), ('POST', 'POST'), ('PUT', 'PUT'), ('DELETE', 'DELETE')])
     url = TextField('URL')
     payload = TextAreaField('Payload')
+
 
 @app.route("/")
 def hello():
     return render_template('hello.html')
+
 
 @app.route("/questions")
 def listQuestions():
     questions = Question.query.order_by('id').all()
     return render_template('listQuestions.html', questions=questions)
 
+
 @app.route("/question/<int:id>")
 def viewQuestion(id):
     questions = Question.query.order_by('id').all()
     question = Question.query.get(id)
     tree = ET.fromstring(question.xml)
-    return render_template('viewQuestion.html', questions = questions, id=id, xml=ET.tostring(tree), json=question.json())
+    return render_template('viewQuestion.html', questions=questions, id=id, xml=ET.tostring(tree), json=question.json())
+
 
 @app.route("/question/post/<int:id>", methods=['GET', 'POST'])
 def postQuestion(id):
@@ -78,9 +82,10 @@ def postQuestion(id):
         else:
             makeRequest = requests.get
         response = requests.post(form.url.data, data=form.payload.data)
-        return render_template('postQuestion.html', questions = questions, id=id, form=form, response=response)
+        return render_template('postQuestion.html', questions=questions, id=id, form=form, response=response)
     else:
-        return render_template('postQuestion.html', questions = questions, id=id, form=form)
+        return render_template('postQuestion.html', questions=questions, id=id, form=form)
+
 
 @app.route("/question/edit/<int:id>", methods=['GET', 'POST'])
 def editQuestion(id):
@@ -93,7 +98,8 @@ def editQuestion(id):
         flash('Question Edited!')
         return redirect(url_for('listQuestions'))
     else:
-        return render_template('editQuestion.html', questions = questions, id=id, form=form)
+        return render_template('editQuestion.html', questions=questions, id=id, form=form)
+
 
 @app.route("/question/new", methods=['GET', 'POST'])
 def newQuestion():
@@ -107,6 +113,7 @@ def newQuestion():
         return redirect(url_for('listQuestions'))
     else:
         return render_template('newQuestion.html', form=form)
+
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
