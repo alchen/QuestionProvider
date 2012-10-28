@@ -67,7 +67,7 @@ def postQuestion(id):
     questions = Question.query.order_by('id').all()
     question = Question.query.get(id)
     tree = ET.fromstring(question.xml)
-    form = PostForm(url="http://127.0.0.1:4000/", payload=question.json())
+    form = PostForm(url="http://echoing.herokuapp.com/", payload=question.json())
     if form.validate_on_submit():
         if form.method.data == 'PUT':
             makeRequest = requests.put
