@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+{% include "_questionsHelper.html" %}
+<section id="render-question">
+	<h3>Question {{ id }}:</h3>
+	<section id="question-text">
+		<pre>{{ text }}</pre>
+	</section>
+ 	<section id="question-answer">
+		<form class="form form-horizontal" method="post">
+			{{ form.hidden_tag() }}
+			{{ wtf.form_errors(form, False) }}
+			{{ wtf.horizontal_field(form.answer) }}
+			<div class="form-actions">
+			   <button name="action_save" type="submit" class="btn btn-primary">Post</button>
+			</div>
+		</form>
+	</section>
+</section>
+{% endblock %}
