@@ -100,6 +100,7 @@ def postQuestion(id, toPost):
     questions = Question.query.order_by('id').all()
     question = Question.query.get(id)
     tree = ET.fromstring(question.xml)
+    headers = {'content-type': 'application/json'}
     if toPost == 'question':
         json = question.json()
     elif toPost == 'answer':
@@ -109,7 +110,7 @@ def postQuestion(id, toPost):
     form = PostForm(url="http://echoing.herokuapp.com/", payload=json)
     if form.validate_on_submit():
         request = requestMethod(form.method.data)
-        response = request(form.url.data, data=form.payload.data)
+        response = request(form.url.data, data=form.payload.data, headers=headers)
         return render_template('postQuestion.html', questions=questions, id=id, form=form, response=response)
     else:
         return render_template('postQuestion.html', questions=questions, id=id, form=form)
